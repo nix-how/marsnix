@@ -4,8 +4,13 @@
 a given nixpkgs path. The function expects a path to the root of nixpkgs, where
 it will begin evaluating using `nix-eval-jobs`. Below are some valid example invocations:
 
-- ```marsnix { nixpkgs = (builtins.getFlake "github:nixos/nixpkgs/b5883c36db04fb19386d9051e1d77af54225e091"); }```
-- ```marsnix { nixpkgs = pkgs.path; }```
+```
+marsnix { nixpkgs = (builtins.getFlake "github:nixos/nixpkgs/b5883c36db04fb19386d9051e1d77af54225e091"); }
+```
+
+```
+marsnix { nixpkgs = pkgs.path; }
+```
 
 You could then map it over a list and symlinkJoin the result in order to fetch all FODs for all the revision(s) you're
 interested in. An example of this exists in [./functions/marsnix/get-me-all-the-fods.nix](./functions/marsnix/get-me-all-the-fods.nix), which can also be built as an output of this flake, by running `nix build .#marsnix-example-invocation -L`
