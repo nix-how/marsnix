@@ -17,13 +17,18 @@
       flake = {
         herculesCI.ciSystems = [ "x86_64-linux" ];
         overlay = final: prev: {
+          marsnix-cli = self.packages.${prev.stdenv.hostPlatform.system}.marsnix;
           marsnix = self.packages.${prev.stdenv.hostPlatform.system}.marsnix;
         };
       };
       perSystem = { config, self', inputs', pkgs, system, ... }: {
+        legacyPackages = {
+          marsnix = pkgs.callPackage ./functions/marsnix {};
+          marsnix-example-invocation = pkgs.callPackage ./functions/marsnix/get-me-all-the-fods.nix { inherit pkgs; };
+        };
         packages = rec {
-          default = marsnix;
-          marsnix = pkgs.callPackage ./pkgs/marsnix {};
+          default = marsnix-cli;
+          marsnix-cli = pkgs.callPackage ./pkgs/marsnix {};
         };
       };
     };
