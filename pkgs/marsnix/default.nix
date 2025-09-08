@@ -1,6 +1,6 @@
-{ lib, writeShellApplication, nixVersions, makeWrapper, jq }:
+{ writeShellApplication, nixVersions, jq }:
 let
-  patchedNix = nixVersions.unstable.overrideAttrs (_: {
+  patchedNix = nixVersions.latest.overrideAttrs (_: {
     prePatch = ''
       substituteInPlace src/nix-env/nix-env.cc \
         --replace 'settings.readOnlyMode = true' 'settings.readOnlyMode = false'
